@@ -19,6 +19,7 @@ class UserView extends StatelessWidget {
         IconButton(onPressed: () {}, icon: Icon(Icons.logout)),
       ]),
       body: _profilePage(user),
+      backgroundColor: Theme.of(context).backgroundColor,
     );
   }
 

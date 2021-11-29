@@ -4,18 +4,22 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:platform_channel_events/models/parking.dart';
 
-part 'home_event.dart';
-part 'home_state.dart';
+part 'park_event.dart';
+part 'park_state.dart';
 
-class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc({required Parking parking})
-      : super(HomeState(selectedParking: parking)) {
+class ParkBloc extends Bloc<ParkEvent, ParkState> {
+  ParkBloc({required Parking parking})
+      : super(ParkState(selectedParking: parking)) {
     on<ParkSelectedEvent>((event, emit) {
       emit(state.copyWith(parking: event.parking));
     });
 
     on<ClearSelectionEvent>((event, emit) {
       emit(state.copyWith(parking: Parking.empty));
+    });
+
+    on<VehiclePlateChangedEvent>((event, emit) {
+      emit(state.copyWith(plate: event.plate));
     });
   }
 }

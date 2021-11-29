@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:platform_channel_events/home/bloc/home_bloc.dart';
 import 'package:platform_channel_events/models/parking.dart';
+import 'package:platform_channel_events/park/bloc/park_bloc.dart';
 import 'package:provider/src/provider.dart';
 
 class GoogleMapWidget extends StatefulWidget {
@@ -29,22 +29,22 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
           markerId: MarkerId('pqpatins'),
           infoWindow: InfoWindow(title: "Parque dos patins: 88 vagas"),
           position: LatLng(-22.97186, -43.21660),
-          onTap: () => context.read<HomeBloc>().add(ParkSelectedEvent(
+          onTap: () => context.read<ParkBloc>().add(ParkSelectedEvent(
               parking: Parking('Parque dos patins', 150, 88))),
         ),
         Marker(
           markerId: MarkerId('coballeblon'),
-          infoWindow: InfoWindow(title: "Cobal do Leblon: 92 vagas"),
+          infoWindow: InfoWindow(title: "Cobal do Leblon: 38 vagas"),
           position: LatLng(-22.97975, -43.22122),
-          onTap: () => context.read<HomeBloc>().add(
-              ParkSelectedEvent(parking: Parking('Cobal do Leblon', 150, 88))),
+          onTap: () => context.read<ParkBloc>().add(
+              ParkSelectedEvent(parking: Parking('Cobal do Leblon', 55, 38))),
         ),
         Marker(
           markerId: MarkerId('baixogavea'),
           infoWindow: InfoWindow(title: "Baixo Gávea: 133 vagas"),
           position: LatLng(-22.97363, -43.22712),
-          onTap: () => context.read<HomeBloc>().add(ParkSelectedEvent(
-              parking: Parking('Parque dos patins', 150, 88))),
+          onTap: () => context.read<ParkBloc>().add(
+              ParkSelectedEvent(parking: Parking('Baixo Gávea', 214, 133))),
         ),
       },
       onTap: _handleTap,
@@ -52,7 +52,7 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
   }
 
   void _handleTap(LatLng tappedPoint) {
-    context.read<HomeBloc>().add(ClearSelectionEvent());
+    context.read<ParkBloc>().add(ClearSelectionEvent());
   }
 
   @override

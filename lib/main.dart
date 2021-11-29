@@ -3,13 +3,12 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:platform_channel_events/home/bloc/home_bloc.dart';
 import 'package:platform_channel_events/home/home_view.dart';
 import 'package:platform_channel_events/models/parking.dart';
 import 'package:platform_channel_events/models/user.dart';
+import 'package:platform_channel_events/park/bloc/park_bloc.dart';
 import 'package:platform_channel_events/user/bloc/user_bloc.dart';
 import 'package:platform_channel_events/user/user_view.dart';
-import 'image_stream_widget.dart';
 import 'widgets/network_stream_widget.dart';
 
 void main() {
@@ -25,7 +24,7 @@ class _MyApp extends StatelessWidget {
             create: (context) => UserBloc(
                 user: User(
                     '1', 'Stefano Pereira', 23, 100, 'stefano@flutter.com'))),
-        BlocProvider(create: (context) => HomeBloc(parking: Parking.empty)),
+        BlocProvider(create: (context) => ParkBloc(parking: Parking.empty)),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -33,6 +32,7 @@ class _MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.purple,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          backgroundColor: Color(0xffededed),
         ),
         home: HomeView(
           title: 'Parkin',

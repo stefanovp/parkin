@@ -1,8 +1,9 @@
 // ignore_for_file: omit_local_variable_types
 
 import 'package:flutter/material.dart';
-import 'package:platform_channel_events/home/bloc/home_bloc.dart';
 import 'package:platform_channel_events/models/parking.dart';
+import 'package:platform_channel_events/park/bloc/park_bloc.dart';
+import 'package:platform_channel_events/park/park_view.dart';
 import 'package:platform_channel_events/user/bloc/user_bloc.dart';
 import 'package:platform_channel_events/user/user_view.dart';
 import 'package:platform_channel_events/widgets/map_widget.dart';
@@ -53,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
 
   Widget _selectButton(BuildContext context) {
     Parking selected =
-        context.select((HomeBloc bloc) => bloc.state.selectedParking);
+        context.select((ParkBloc bloc) => bloc.state.selectedParking);
     return ElevatedButton(
       onPressed: selected != Parking.empty ? _selectPark : null,
       child: Text(
@@ -64,6 +65,6 @@ class _HomeViewState extends State<HomeView> {
 
   void _selectPark() {
     Navigator.of(context)
-        .push(MaterialPageRoute<void>(builder: (_) => UserView()));
+        .push(MaterialPageRoute<void>(builder: (_) => ParkView()));
   }
 }
