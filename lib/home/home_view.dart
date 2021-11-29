@@ -1,4 +1,8 @@
+// ignore_for_file: omit_local_variable_types
+
 import 'package:flutter/material.dart';
+import 'package:platform_channel_events/home/bloc/home_bloc.dart';
+import 'package:platform_channel_events/models/parking.dart';
 import 'package:platform_channel_events/user/bloc/user_bloc.dart';
 import 'package:platform_channel_events/user/user_view.dart';
 import 'package:platform_channel_events/widgets/map_widget.dart';
@@ -7,7 +11,6 @@ import 'package:provider/src/provider.dart';
 
 class HomeView extends StatefulWidget {
   final String title;
-  final _parkingSelected = false;
 
   const HomeView({Key? key, required this.title}) : super(key: key);
 
@@ -49,8 +52,10 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget _selectButton(BuildContext context) {
+    Parking selected =
+        context.select((HomeBloc bloc) => bloc.state.selectedParking);
     return ElevatedButton(
-      onPressed: widget._parkingSelected ? _selectPark : null,
+      onPressed: selected != Parking.empty ? _selectPark : null,
       child: Text(
         'Selecionar estacionamento',
       ),

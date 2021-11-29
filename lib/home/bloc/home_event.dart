@@ -12,3 +12,5 @@ class ParkSelectedEvent extends HomeEvent {
 
   ParkSelectedEvent({required this.parking});
 }
+
+class ClearSelectionEvent extends HomeEvent {}

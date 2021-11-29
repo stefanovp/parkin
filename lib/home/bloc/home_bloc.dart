@@ -13,5 +13,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ParkSelectedEvent>((event, emit) {
       emit(state.copyWith(parking: event.parking));
     });
+
+    on<ClearSelectionEvent>((event, emit) {
+      emit(state.copyWith(parking: Parking.empty));
+    });
   }
 }
