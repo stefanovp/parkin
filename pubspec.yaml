@@ -13,6 +13,7 @@ dependencies:
   google_maps_flutter: any
   equatable: 2.0.3
   flutter_bloc: any
+  sqflite: any
 
 
 dev_dependencies:

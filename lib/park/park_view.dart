@@ -1,15 +1,21 @@
+// ignore_for_file: omit_local_variable_types
+
 import 'package:flutter/material.dart';
 import 'package:platform_channel_events/models/parking.dart';
+import 'package:platform_channel_events/models/ticket.dart';
 import 'package:platform_channel_events/park/bloc/park_bloc.dart';
+import 'package:platform_channel_events/ticket/bloc/ticket_bloc.dart';
 import 'package:platform_channel_events/ticket/ticket_view.dart';
 import 'package:provider/src/provider.dart';
 
 class ParkView extends StatelessWidget {
-  const ParkView({Key? key}) : super(key: key);
+  ParkView({Key? key}) : super(key: key);
+
+  Parking selectedParking = Parking.empty;
 
   @override
   Widget build(BuildContext context) {
-    Parking selectedParking =
+    selectedParking =
         context.select((ParkBloc bloc) => bloc.state.selectedParking);
 
     return Scaffold(
@@ -108,5 +114,24 @@ class ParkView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _onButtonClicked(BuildContext context) {
+    String? plate = context.select((ParkBloc bloc) => bloc.state.plate);
+    if (plate == null) {
+      return null;
+    }
+
+    Ticket ticket = Ticket(
+        parkingName: selectedParking.name,
+        vehiclePlate: plate,
+        expirationDate:
+            (DateTime.now().add(Duration(hours: 2)).microsecondsSinceEpoch /
+                    1000)
+                .round(),
+        cost: 15,
+        isPaid: false,
+        isValid: false);
+    context.read<TicketBloc>().add(CreateTicketEvent(ticket: ticket));
   }
 }

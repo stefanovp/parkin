@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:platform_channel_events/credits/credits_view.dart';
+import 'package:platform_channel_events/ticket/tickets_view.dart';
 import 'package:provider/src/provider.dart';
 
 import '../models/user.dart';
@@ -18,7 +20,7 @@ class UserView extends StatelessWidget {
       appBar: AppBar(centerTitle: true, title: Text('Profile'), actions: [
         IconButton(onPressed: () {}, icon: Icon(Icons.logout)),
       ]),
-      body: _profilePage(user),
+      body: _profilePage(context, user),
       backgroundColor: Theme.of(context).backgroundColor,
     );
   }
@@ -62,13 +64,37 @@ class UserView extends StatelessWidget {
     );
   }
 
-  Widget _viewTicketsButton() {
+  Widget _viewTicketsButton(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 64.0),
-        child: ElevatedButton(onPressed: () {}, child: Text('My Tickets')));
+        padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute<void>(builder: (_) => TicketsView())),
+          child: Text('My Tickets'),
+        ));
   }
 
-  Widget _profilePage(User user) {
+  Widget _buyCreditsButton(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute<void>(builder: (_) => CreditView())),
+          child: Text('Buy Credits'),
+        ));
+  }
+
+  Widget _buttonsRow(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 48.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [_viewTicketsButton(context), _buyCreditsButton(context)],
+      ),
+    );
+  }
+
+  Widget _profilePage(BuildContext context, User user) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +107,7 @@ class UserView extends StatelessWidget {
           _emailTile(user),
           _ageTile(user),
           _creditsTile(user),
-          _viewTicketsButton(),
+          _buttonsRow(context),
         ],
       ),
     );
