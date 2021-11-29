@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:platform_channel_events/user/bloc/user_bloc.dart';
+import 'package:provider/src/provider.dart';
 
 class TicketView extends StatelessWidget {
   const TicketView({Key? key}) : super(key: key);
@@ -68,11 +70,16 @@ class TicketView extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.0),
       child: ElevatedButton(
-        onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
+        onPressed: () => _onPayButtonClicked(context),
         child: Text(
           'Pagar Ticket',
         ),
       ),
     );
+  }
+
+  void _onPayButtonClicked(BuildContext context) {
+    context.read<UserBloc>().add(UseCreditsEvent(used: 3));
+    Navigator.popUntil(context, (route) => route.isFirst);
   }
 }
