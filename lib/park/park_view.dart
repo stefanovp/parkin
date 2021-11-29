@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:platform_channel_events/models/parking.dart';
 import 'package:platform_channel_events/park/bloc/park_bloc.dart';
+import 'package:platform_channel_events/ticket/ticket_view.dart';
 import 'package:provider/src/provider.dart';
 
 class ParkView extends StatelessWidget {
@@ -24,7 +25,7 @@ class ParkView extends StatelessWidget {
             _totalTile(selectedParking),
             _availableTile(selectedParking),
             _plateTile(context),
-            _buildTicketButton(),
+            _buildTicketButton(context),
           ],
         ),
       ),
@@ -96,11 +97,12 @@ class ParkView extends StatelessWidget {
     );
   }
 
-  Widget _buildTicketButton() {
+  Widget _buildTicketButton(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.0),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () => Navigator.of(context)
+            .push(MaterialPageRoute<void>(builder: (_) => TicketView())),
         child: Text(
           'Gerar Ticket',
         ),

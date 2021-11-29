@@ -7,6 +7,7 @@ import 'package:platform_channel_events/home/home_view.dart';
 import 'package:platform_channel_events/models/parking.dart';
 import 'package:platform_channel_events/models/user.dart';
 import 'package:platform_channel_events/park/bloc/park_bloc.dart';
+import 'package:platform_channel_events/ticket/ticket_view.dart';
 import 'package:platform_channel_events/user/bloc/user_bloc.dart';
 import 'package:platform_channel_events/user/user_view.dart';
 import 'widgets/network_stream_widget.dart';
@@ -35,7 +36,7 @@ class _MyApp extends StatelessWidget {
           backgroundColor: Color(0xffededed),
         ),
         home: HomeView(
-          title: 'Parkin',
+          title: "Parkin",
         ),
       ),
     );
