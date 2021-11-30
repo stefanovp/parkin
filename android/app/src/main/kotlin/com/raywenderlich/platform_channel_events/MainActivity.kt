@@ -13,9 +13,6 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         EventChannel(flutterEngine.dartExecutor.binaryMessenger, networkEventChannel)
             .setStreamHandler(NetworkStreamHandler(this))
-        
-        EventChannel(flutterEngine.dartExecutor.binaryMessenger, imageEventChannel)
-            .setStreamHandler(ImageStreamHandler(this))
         super.configureFlutterEngine(flutterEngine)
     }
 
