@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:platform_channel_events/models/parking.dart';
+import 'package:platform_channel_events/notificaitons/notification_api.dart';
 import 'package:platform_channel_events/park/bloc/park_bloc.dart';
 import 'package:platform_channel_events/park/park_view.dart';
 import 'package:platform_channel_events/user/bloc/user_bloc.dart';
@@ -24,6 +25,10 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () => NotificationApi.showNotification(
+                title: 'Simple', body: 'This is a cool test!'),
+            icon: Icon(Icons.notification_add)),
         centerTitle: true,
         title: Text(widget.title),
         actions: [
