@@ -138,8 +138,8 @@ class ParkView extends StatelessWidget {
     NotificationApi.showScheduledNotification(
         title: "Seu ticket expira em 15 minutos...",
         body: "Seu ticket para ${ticket.parkingName} irá expirar em breve",
-        scheduledDate: DateTime.now()
-            .add(Duration(seconds: 30))); // ideally is the ticket Duration
+        scheduledDate: DateTime.now().add(
+            Duration(seconds: 30))); // ideally is close to the ticket Duration.
 
     Navigator.of(context).push(MaterialPageRoute<void>(
         builder: (_) => TicketView(
