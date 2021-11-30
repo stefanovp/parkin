@@ -27,10 +27,10 @@ class _GoogleMapWidgetState extends State<GoogleMapWidget> {
       markers: {
         Marker(
           markerId: MarkerId('pqpatins'),
-          infoWindow: InfoWindow(title: "Parque dos patins: 88 vagas"),
+          infoWindow: InfoWindow(title: "Parque dos Patins: 88 vagas"),
           position: LatLng(-22.97186, -43.21660),
           onTap: () => context.read<ParkBloc>().add(ParkSelectedEvent(
-              parking: Parking('Parque dos patins', 150, 88))),
+              parking: Parking('Parque dos Patins', 150, 88))),
         ),
         Marker(
           markerId: MarkerId('coballeblon'),

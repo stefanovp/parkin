@@ -13,10 +13,13 @@ class ParkView extends StatelessWidget {
 
   Parking selectedParking = Parking.empty;
 
+  String? plate;
+
   @override
   Widget build(BuildContext context) {
     selectedParking =
         context.select((ParkBloc bloc) => bloc.state.selectedParking);
+    plate = context.select((ParkBloc bloc) => bloc.state.plate);
 
     return Scaffold(
       appBar: AppBar(
@@ -107,8 +110,7 @@ class ParkView extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.0),
       child: ElevatedButton(
-        onPressed: () => Navigator.of(context)
-            .push(MaterialPageRoute<void>(builder: (_) => TicketView())),
+        onPressed: plate == null ? null : () => _onButtonClicked(context),
         child: Text(
           'Gerar Ticket',
         ),
@@ -117,21 +119,24 @@ class ParkView extends StatelessWidget {
   }
 
   void _onButtonClicked(BuildContext context) {
-    String? plate = context.select((ParkBloc bloc) => bloc.state.plate);
     if (plate == null) {
       return null;
     }
 
     Ticket ticket = Ticket(
         parkingName: selectedParking.name,
-        vehiclePlate: plate,
+        vehiclePlate: plate!,
         expirationDate:
-            (DateTime.now().add(Duration(hours: 2)).microsecondsSinceEpoch /
+            (DateTime.now().add(Duration(hours: 2)).millisecondsSinceEpoch /
                     1000)
                 .round(),
         cost: 15,
-        isPaid: false,
-        isValid: false);
+        isPaid: false);
     context.read<TicketBloc>().add(CreateTicketEvent(ticket: ticket));
+
+    Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (_) => TicketView(
+              ticket: ticket,
+            )));
   }
 }

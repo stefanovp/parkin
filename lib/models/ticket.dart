@@ -12,8 +12,12 @@ class Ticket extends Equatable {
   final String vehiclePlate;
   final int expirationDate;
   final int cost;
-  bool isValid;
   bool isPaid;
+
+  bool isValid() {
+    return expirationDate >
+        (DateTime.now().millisecondsSinceEpoch / 1000).round();
+  }
 
   Ticket copyWith(
       {int? id,
@@ -21,7 +25,6 @@ class Ticket extends Equatable {
       String? vehiclePlate,
       int? expirationDate,
       int? cost,
-      bool? isValid,
       bool? isPaid}) {
     return Ticket(
         id: id ?? this.id,
@@ -29,8 +32,7 @@ class Ticket extends Equatable {
         vehiclePlate: vehiclePlate ?? this.vehiclePlate,
         expirationDate: expirationDate ?? this.expirationDate,
         cost: cost ?? this.cost,
-        isPaid: isPaid ?? this.isPaid,
-        isValid: isValid ?? this.isValid);
+        isPaid: isPaid ?? this.isPaid);
   }
 
   @override
@@ -44,22 +46,21 @@ class Ticket extends Equatable {
         isValid
       ];
 
-  Ticket(
-      {this.id,
-      required this.parkingName,
-      required this.vehiclePlate,
-      required this.expirationDate,
-      required this.cost,
-      required this.isPaid,
-      required this.isValid});
+  Ticket({
+    this.id,
+    required this.parkingName,
+    required this.vehiclePlate,
+    required this.expirationDate,
+    required this.cost,
+    required this.isPaid,
+  });
 
   Map<String, Object?> toJson() => {
         TicketFields.id: id,
         TicketFields.parkingName: parkingName,
         TicketFields.vehiclePlate: vehiclePlate,
         TicketFields.cost: cost,
-        TicketFields.isPaid: isPaid,
-        TicketFields.isValid: isValid,
+        TicketFields.isPaid: isPaid ? 1 : 0,
         TicketFields.expirationDate: expirationDate,
       };
 
@@ -68,8 +69,7 @@ class Ticket extends Equatable {
         parkingName: json[TicketFields.parkingName] as String,
         vehiclePlate: json[TicketFields.vehiclePlate] as String,
         cost: json[TicketFields.cost] as int,
-        isPaid: json[TicketFields.isPaid] as bool,
-        isValid: json[TicketFields.vehiclePlate] as bool,
+        isPaid: json[TicketFields.isPaid] == 1,
         expirationDate: json[TicketFields.expirationDate] as int,
       );
 }

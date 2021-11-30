@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:platform_channel_events/database/database.dart';
 import 'package:platform_channel_events/models/ticket.dart';
+import 'package:platform_channel_events/ticket/ticket_view.dart';
 
 class TicketsView extends StatefulWidget {
   const TicketsView({Key? key}) : super(key: key);
@@ -41,6 +42,7 @@ class _TicketsWidgetState extends State<TicketsWidget> {
     setState(() => isLoading = true);
 
     this.tickets = await TicketsDatabase.instance.readAllTickets();
+    tickets = tickets.reversed.toList();
 
     setState(() => isLoading = false);
   }
@@ -67,20 +69,71 @@ class _TicketsWidgetState extends State<TicketsWidget> {
           Ticket ticket = tickets[index];
           return Container(
             padding: const EdgeInsets.all(10.0),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(ticket.id.toString()),
-                  Text('Local: ${ticket.parkingName}'),
-                  Text('Veiculo: ${ticket.vehiclePlate}')
-                ],
-              ),
+            child: TicketCard(
+              ticket: ticket,
             ),
           );
         },
       );
+}
+
+class TicketCard extends StatelessWidget {
+  const TicketCard({required Ticket this.ticket});
+
+  final Ticket ticket;
+
+  @override
+  Widget build(BuildContext context) {
+    bool isValid;
+
+    return Container(
+      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+      height: 180,
+      width: double.maxFinite,
+      child: GestureDetector(
+        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(
+            builder: (_) => TicketView(
+                  ticket: ticket,
+                ))),
+        child: Card(
+          child: Container(
+            color: ticket.isValid() ? Colors.green : Colors.amber,
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text('#${ticket.id}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.w600,
+                      )),
+                ),
+                Expanded(
+                    child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(ticket.parkingName,
+                          style: TextStyle(
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Text('Veículo: ${ticket.vehiclePlate}',
+                          style: TextStyle(
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.w600,
+                          )),
+                    ],
+                  ),
+                ))
+              ],
+            ),
+          ),
+          elevation: 10,
+        ),
+      ),
+    );
+  }
 }

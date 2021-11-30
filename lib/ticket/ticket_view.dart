@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:platform_channel_events/models/ticket.dart';
 import 'package:platform_channel_events/user/bloc/user_bloc.dart';
 import 'package:provider/src/provider.dart';
 
 class TicketView extends StatelessWidget {
-  const TicketView({Key? key}) : super(key: key);
+  const TicketView({required Ticket this.ticket});
+  final Ticket ticket;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class TicketView extends StatelessWidget {
             image: AssetImage('assets/qrcode.png'),
             fit: BoxFit.cover,
           ),
-          Text('Ticket Id: 10932i932932-323-2381903-232'),
+          Text('Ticket Id: ${ticket.id}'),
         ],
       ),
     );
@@ -46,7 +48,7 @@ class TicketView extends StatelessWidget {
     return ListTile(
       tileColor: Colors.white,
       leading: Icon(Icons.location_on),
-      title: Text('Parque dos Patins'),
+      title: Text(ticket.parkingName),
     );
   }
 
@@ -54,7 +56,7 @@ class TicketView extends StatelessWidget {
     return ListTile(
       tileColor: Colors.white,
       leading: Icon(Icons.directions_car),
-      title: Text('LKE6601'),
+      title: Text(ticket.vehiclePlate),
     );
   }
 
@@ -62,8 +64,20 @@ class TicketView extends StatelessWidget {
     return ListTile(
       tileColor: Colors.white,
       leading: Icon(Icons.access_time),
-      title: Text('14:35h'),
+      title: Text(_dateToReadableString(
+          DateTime.fromMillisecondsSinceEpoch(ticket.expirationDate * 1000))),
     );
+  }
+
+  String _dateToReadableString(DateTime date) {
+    var year = date.year;
+    var month = date.month;
+    var day = date.day;
+    var hour = date.hour;
+    var minute = date.minute;
+    var second = date.second;
+
+    return '$day/$month/$year - $hour:${minute}h';
   }
 
   Widget _payTicketButton(BuildContext context) {
