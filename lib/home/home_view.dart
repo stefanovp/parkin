@@ -25,10 +25,6 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () => NotificationApi.showNotification(
-                title: 'Simple', body: 'This is a cool test!'),
-            icon: Icon(Icons.notification_add)),
         centerTitle: true,
         title: Text(widget.title),
         actions: [

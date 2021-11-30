@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:platform_channel_events/models/parking.dart';
 import 'package:platform_channel_events/models/ticket.dart';
+import 'package:platform_channel_events/notificaitons/notification_api.dart';
 import 'package:platform_channel_events/park/bloc/park_bloc.dart';
 import 'package:platform_channel_events/ticket/bloc/ticket_bloc.dart';
 import 'package:platform_channel_events/ticket/ticket_view.dart';
@@ -133,6 +134,12 @@ class ParkView extends StatelessWidget {
         cost: 15,
         isPaid: false);
     context.read<TicketBloc>().add(CreateTicketEvent(ticket: ticket));
+
+    NotificationApi.showScheduledNotification(
+        title: "Seu ticket expira em 15 minutos...",
+        body: "Seu ticket para ${ticket.parkingName} irá expirar em breve",
+        scheduledDate: DateTime.now()
+            .add(Duration(seconds: 30))); // ideally is the ticket Duration
 
     Navigator.of(context).push(MaterialPageRoute<void>(
         builder: (_) => TicketView(
