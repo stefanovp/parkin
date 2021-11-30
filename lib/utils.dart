@@ -38,7 +38,6 @@ Connection intToConnection(int connectionInt) {
   return connection;
 }
 
-
 /// converts the network events to the appropriate Color
 Color getConnectionColor(Connection connection) {
   var color = Colors.red[900];
@@ -64,10 +63,10 @@ String getConnectionMessage(Connection connection) {
   var msg = 'Unknown connection';
   switch (connection) {
     case Connection.wifi:
-      msg = 'Connected to Wifi';
+      msg = 'Conectado ao Wifi';
       break;
     case Connection.cellular:
-      msg = 'Connected to mobile data';
+      msg = 'Conectado na rede móvel';
       break;
     case Connection.disconnected:
       msg = 'Offline';
